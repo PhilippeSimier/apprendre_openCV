@@ -31,7 +31,7 @@ using namespace std;
 int main(int argc,char ** argv)
 {
 
-  Mat image;
+  Mat image, image_inv;
   double largeur,hauteur;
   VideoCapture cap;
   string titre;
@@ -65,7 +65,8 @@ int main(int argc,char ** argv)
         cerr << "Fin de lecture de la video" << endl;
         return 0;
     }
-    imshow(titre, image); // affichage de la vidéo dans une fenêtre
+    flip( image, image_inv, -1); // mirroir horizontal
+    imshow(titre, image_inv); // affichage de la vidéo dans une fenêtre
   }
   while(waitKey(1000/fps) != 27);
 
