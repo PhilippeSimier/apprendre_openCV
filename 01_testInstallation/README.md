@@ -62,17 +62,28 @@ Pour contrôler l'installation exécuter le programme opencv_version situé dans
 /usr/local/bin/opencv_version
 3.3.0
 ```
-###5 Compilation d'un premier programme
+### 5 Vérification pour python
+
+```bash
+psimier@b107PSR ~/opencv3/apprendre_openCV/01_testInstallation $ python3
+Python 3.5.2 (default, Nov 12 2018, 13:43:14) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import cv2
+>>> cv2.__version__
+'3.3.0'
+>>> quit()
+```
+
+### 6 Compilation d'un premier programme
 le programme test.cpp est un programme très simple qui se contente de créer une image de couleur uniforme et de l'afficher dans une fenêtre.
 
-Pour compiler ce programme utiliser la ligne de commande suivante :
+Pour compiler c
+e programme utiliser la ligne de commande suivante :
 ```bash
 g++ -ggdb test.cpp -o test `pkg-config --cflags --libs opencv`
 ```
 
-### Table of contents
-
-[TOC]
 
 ### Changelog
 
