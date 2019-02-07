@@ -11,8 +11,11 @@
 	      Vous pouvez également ajouter ce module à la liste des modules chargés au démarrage dans
 	      /etc/modules-load.d/modules.conf
 
-    \compilation
+    \compilation raspberry
 	      g++ $(pkg-config --libs --cflags opencv) -o lecteur lecteur.cpp
+
+    \compilation linux mint
+              g++ -ggdb lecteur.cpp -o lecteur `pkg-config --cflags --libs opencv`
 
     \version    1.0 - First release
 
@@ -53,6 +56,7 @@ int main(int argc,char ** argv)
 
   largeur = cap.get(CV_CAP_PROP_FRAME_WIDTH);
   hauteur = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+
   fps     = cap.get(CAP_PROP_FPS);
   cout << "Frame rate   : " << fps << " images par seconde" << endl;
   cout << "Taille image : " << largeur << " x " << hauteur << endl;
@@ -65,8 +69,8 @@ int main(int argc,char ** argv)
         cerr << "Fin de lecture de la video" << endl;
         return 0;
     }
-    flip( image, image_inv, -1); // mirroir horizontal
-    imshow(titre, image_inv); // affichage de la vidéo dans une fenêtre
+
+    imshow(titre, image); // affichage de la vidéo dans une fenêtre
   }
   while(waitKey(1000/fps) != 27);
 

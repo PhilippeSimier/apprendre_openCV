@@ -10,8 +10,10 @@
               détection des contours.
               L'algorithme a été conçu par John Canny en 1986
 
-    \compilation
+    \compilation raspberry
 	      g++ $(pkg-config --libs --cflags opencv) -o Canny  Canny.cpp
+    \compilation linux mint
+              g++  Canny.cpp -o Canny `pkg-config --cflags --libs opencv`
 
     \version    1.0 - First release
 */
@@ -60,8 +62,7 @@ int main(int argc,char ** argv)
           return -1;
       }
 
-      flip( image, image_RGB, -1); // mirroir horizontal
-      cvtColor( image_RGB, image_gray, CV_RGB2GRAY);
+      cvtColor( image, image_gray, CV_RGB2GRAY);
       blur( image_gray, image_gray, Size(3,3) );
 
       Canny( image_gray, image_CNY, seuilA, seuilB, 3, true );

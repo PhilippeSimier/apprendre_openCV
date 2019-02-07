@@ -19,6 +19,7 @@
 
     \compilation
 	      g++ $(pkg-config --libs --cflags opencv) -o Laplacian  Laplacian.cpp
+	      g++ -ggdb laplacian.cpp -o laplacian `pkg-config --cflags --libs opencv`
 
     \version    1.0 - First release
 */
@@ -54,12 +55,12 @@ int main(int argc,char ** argv)
             return -1;
         }
 
-        flip( image, image1, -1); 		// mirroir horizontal la camera est inversé
-        cvtColor( image1, image, CV_RGB2GRAY);	// Conversion en niveau de gris
-        blur( image, image1, Size( 5, 5 ));   	// applique une matrice de convolution de 5 par 5 pour le blur
-        Laplacian( image1, image, CV_16S, 3, 1, 0, BORDER_DEFAULT );  // applique le Laplacian
-        convertScaleAbs( image, image1 );
-        imshow("Laplacian", image1);
+
+        cvtColor( image, image1, CV_RGB2GRAY);	// Conversion en niveau de gris
+        blur( image1, image, Size( 5, 5 ));   	// applique une matrice de convolution de 5 par 5 pour le blur
+        Laplacian( image, image1, CV_16S, 3, 1, 0, BORDER_DEFAULT );  // applique le Laplacian
+        convertScaleAbs( image1, image );
+        imshow("Laplacian", image);
     }
     while(waitKey(5) != 27);
 

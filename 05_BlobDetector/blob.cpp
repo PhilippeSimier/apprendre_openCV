@@ -3,7 +3,7 @@
  *
  * Copyright 2015 by Satya Mallick <spmallick@gmail.com>
  * g++ $(pkg-config --libs --cflags opencv) -Wall -o blob  blob.cpp
- *
+ * g++ blob.cpp -o blob `pkg-config --cflags --libs opencv`
  */
 
 #include "opencv2/opencv.hpp"
