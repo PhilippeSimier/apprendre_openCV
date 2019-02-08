@@ -35,47 +35,46 @@ using namespace std;
 int main(int argc,char ** argv)
 {
 
-  Mat image;
-  double largeur,hauteur;
-  VideoCapture cap;
-  string titre;
-  int fps;
+    Mat image;
+    double largeur,hauteur;
+    VideoCapture cap;
+    string titre;
+    int fps;
 
-  if (argc == 1) {
+    if (argc == 1) {
   	cap.open(0); // ouverture de la première caméra
 	titre = "Camera Live";
-  }
-  else{
+    }
+    else{
 	cap.open(argv[1]);
 	titre = argv[1];
-  }
+    }
 
-  if (!cap.isOpened()) {
-    cerr << "ERREUR: Impossible d'ouvrir le flux vidéo" << endl;
-    return -1;
-  }
+    if (!cap.isOpened()) {
+        cerr << "ERREUR: Impossible d'ouvrir le flux vidéo" << endl;
+        return -1;
+    }
 
-  largeur = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-  hauteur = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-  fps     = cap.get(CAP_PROP_FPS);
+    largeur = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    hauteur = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    fps     = cap.get(CAP_PROP_FPS);
 
-  cout << "Frame rate   : " << fps << " images par seconde" << endl;
-  cout << "Taille image : " << largeur << " x " << hauteur << endl;
+    cout << "Frame rate   : " << fps << " images par seconde" << endl;
+    cout << "Taille image : " << largeur << " x " << hauteur << endl;
 
-  cout << "démarrage de la lecture, appuyer sur la touche Echap du clavier pour quitter" << endl;
-  bool vide = true;
-  do {
-    cap >> image;
-    vide = image.empty();
+    cout << "démarrage de la lecture, appuyer sur la touche Echap du clavier pour quitter" << endl;
+    bool vide = true;
+    do {
+        cap >> image;
 
-    if (!vide)
-       imshow(titre, image); // affichage de l'image dans la fenêtre
-  }
-  while(waitKey(1000/fps) != 27 && !vide);
+        if (!(vide = image.empty()))
+            imshow(titre, image); // affichage de l'image dans la fenêtre
+    }
+    while(waitKey(1000/fps) != 27 && !vide);
 
-  cout << "Fermeture du flux vidéo" << endl;
-  cap.release();
-  destroyAllWindows();
-  cout << "bye!" <<endl;
-  return 0;
+    cout << "Fermeture du flux vidéo" << endl;
+    cap.release();
+    //destroyAllWindows();
+    cout << "bye!" <<endl;
+    return 0;
 }
