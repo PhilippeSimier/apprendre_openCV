@@ -8,6 +8,8 @@
 	      de Gary Bradski aux éditions Oreilly
     \compilation
 	      g++ $(pkg-config --libs --cflags opencv) -o lecteur2 lecteur2.cpp
+              g++ -ggdb lecteur2.cpp -o lecteur2 `pkg-config --cflags --libs opencv`
+
     \version    1.0 - First release
     \exécution	./lecteur2 chaplin.mp4
 
@@ -62,6 +64,9 @@ int main( int argc, char** argv ) {
     cout << "La video a " << frames << " frames de dimensions("
        << tmpw << ", " << tmph << ")." << endl;
 
+    if(frames == 0){
+	frames = 100;
+    }
     createTrackbar( "Position",  "lecteur2",  &slider_position, frames, onTrackbarSlide );
 
     Mat frame;

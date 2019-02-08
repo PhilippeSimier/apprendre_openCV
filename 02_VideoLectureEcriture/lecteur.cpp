@@ -24,9 +24,10 @@
 */
 /*************************************************************************************/
 #include <iostream>
-#include <string>
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui.hpp>
+#include <string>  // la biblio string de std
+
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/videoio.hpp>
 
 using namespace cv;
 using namespace std;
@@ -34,7 +35,7 @@ using namespace std;
 int main(int argc,char ** argv)
 {
 
-  Mat image, image_inv;
+  Mat image;
   double largeur,hauteur;
   VideoCapture cap;
   string titre;
@@ -56,25 +57,23 @@ int main(int argc,char ** argv)
 
   largeur = cap.get(CV_CAP_PROP_FRAME_WIDTH);
   hauteur = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-
   fps     = cap.get(CAP_PROP_FPS);
+
   cout << "Frame rate   : " << fps << " images par seconde" << endl;
   cout << "Taille image : " << largeur << " x " << hauteur << endl;
 
   cout << "démarrage de la lecture, appuyer sur la touche Echap du clavier pour quitter" << endl;
-
+  bool vide = true;
   do {
     cap >> image;
-    if (image.empty()) {
-        cerr << "Fin de lecture de la video" << endl;
-        return 0;
-    }
+    vide = image.empty();
 
-    imshow(titre, image); // affichage de la vidéo dans une fenêtre
+    if (!vide)
+       imshow(titre, image); // affichage de l'image dans la fenêtre
   }
-  while(waitKey(1000/fps) != 27);
+  while(waitKey(1000/fps) != 27 && !vide);
 
-  cout << "Fermeture de la camera" << endl;
+  cout << "Fermeture du flux vidéo" << endl;
   cap.release();
   destroyAllWindows();
   cout << "bye!" <<endl;

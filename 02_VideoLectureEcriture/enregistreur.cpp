@@ -9,6 +9,7 @@
 
     \compilation
 	      g++ $(pkg-config --libs --cflags opencv) -o enregistreur  enregistreur.cpp
+	      g++ -ggdb enregistreur.cpp -o enregistreur `pkg-config --cflags --libs opencv`
 
     \version    1.0 - First release
 */
@@ -58,9 +59,8 @@ int main(int argc,char ** argv)
         return -1;
     }
 
-    flip( image, image_inv, -1); // mirroir horizontal
-    imshow("live", image_inv);
-    writer << image_inv;
+    imshow("live", image);
+    writer << image;
   }
   while(waitKey(5) !='x');
 
