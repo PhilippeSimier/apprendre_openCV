@@ -3,7 +3,7 @@
     \file     threshold.cpp
     \author   Philippe SIMIER (Touchard Wahington le Mans)
 
-    \brief    Programme pour tester l'installation d'OpenCV 3 avec la raspiCam
+    \brief    Programme pour tester les algos de seuillage
     \detail   Ce programme ouvre la camera puis affiche l'image obtenue après traitement
               avec la fonction threshold
 
@@ -23,7 +23,7 @@ using namespace std;
 
 int main(int argc,char ** argv)
 {
-    Mat image, image1;
+    Mat image, image1, image2;
     double largeur,hauteur;
     int seuil = 100;
     int max = 255;
@@ -49,13 +49,13 @@ int main(int argc,char ** argv)
     cout << "Taille image : " << largeur << " x " << hauteur << endl;
 
     cout << "Ouverture du flux vidéo, appuyer sur q pour quitter" << endl;
-    namedWindow("threshold",1);
+    namedWindow("THRESH_BINARY_INV",1);
 
     //Create trackbar to change seuil
-    createTrackbar("seuil", "threshold", &seuil, 255);
+    createTrackbar("seuil", "THRESH_BINARY_INV", &seuil, 255);
 
     //Create trackbar to change max
-    createTrackbar("max", "threshold", &max, 255);
+    createTrackbar("max", "THRESH_BINARY_INV", &max, 255);
 
     bool vide = true;
     do{
@@ -64,7 +64,9 @@ int main(int argc,char ** argv)
         {
     	cvtColor( image, image1, CV_RGB2GRAY);
     	threshold(image1, image, (double)seuil,(double)max, THRESH_BINARY_INV);
-    	imshow("threshold", image);
+        threshold(image1, image2, (double)seuil,(double)max, THRESH_BINARY);
+    	imshow("THRESH_BINARY_INV", image);
+        imshow("THRESH_BINARY", image2);
         }
 
    }
