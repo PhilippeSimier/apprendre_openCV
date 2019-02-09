@@ -11,10 +11,8 @@
 	      Vous pouvez également ajouter ce module à la liste des modules chargés au démarrage dans
 	      /etc/modules-load.d/modules.conf
 
-    \compilation raspberry
-	      g++ $(pkg-config --libs --cflags opencv) -o lecteur lecteur.cpp
 
-    \compilation linux mint
+    \compilation linux
               g++ -ggdb lecteur.cpp -o lecteur `pkg-config --cflags --libs opencv`
 
     \version    1.0 - First release

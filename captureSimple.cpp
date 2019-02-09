@@ -48,8 +48,9 @@ int main(int argc,char ** argv)
         cerr << "ERREUR: Impossible de capturer une image" << endl;
         return -1;
     }
-    flip(image, image1,-1); // mirroir horizontal
-    imshow("Live", image1); // affichage de l'image dans une fenêtre
+//    flip(image, image1,-1); // mirroir horizontal
+//    imshow("Live", image1); // affichage de l'image dans une fenêtre
+      imshow("Live", image);
   }
   while(waitKey(5) !='x');
 
