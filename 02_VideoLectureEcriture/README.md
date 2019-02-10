@@ -72,7 +72,7 @@ l'image peut ensuite être  affichée dans une fenêtre avec la fonction **imsho
     vide = image.empty();
 
     if (!vide)
-       imshow(titre, image); // affichage de l'image dans la fenêtre
+       imshow("nom_de_la_fenetre", image); // affichage de l'image dans la fenêtre
 ```
 
 Chaque image ne doit être affichée que pendant un intervalle de temps fini. Nous devons donc mettre en pause le programme avec la fonction **waitKey ()**. L'argument attendu est le temps de pause exprimé en millisecondes. (25 ms pour obtenir un FPS de 40 images par seconde)
