@@ -16,7 +16,7 @@
               en pixels de l'image - le nombre de pixels non noirs !
 
     \compilation
-	      g++ $(pkg-config --libs --cflags opencv) -o soustraction soustraction.cpp
+	      g++ soustraction.cpp -o  soustraction `pkg-config --libs --cflags opencv`
 
     \version    1.0 - First release
 */
