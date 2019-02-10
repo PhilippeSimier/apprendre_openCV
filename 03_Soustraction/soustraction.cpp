@@ -40,58 +40,57 @@ void showControle(int *seuil, int *nb){
 int main(int argc,char ** argv)
 {
 
-  Mat image, image1, image2, imageDiff;
-  double largeur,hauteur;
-  double fps;
-  int seuilA = 65;
-  int nbMax  = 30;
-  showControle(&seuilA, &nbMax);
-  int nb;
+    Mat image, image1, image2, imageDiff;
+    double largeur,hauteur;
+    double fps;
+    int seuilA = 65;
+    int nbMax  = 30;
+    showControle(&seuilA, &nbMax);
+    int nb;
 
-  VideoCapture cap(0);
-  if (!cap.isOpened()) {
-    cerr << "ERREUR: Impossible d'ouvrir la camera" << endl;
-    return -1;
-  }
+    VideoCapture cap(0);
+    if (!cap.isOpened()) {
+        cerr << "ERREUR: Impossible d'ouvrir la camera" << endl;
+        return -1;
+    }
 
-  largeur = cap.get(CAP_PROP_FRAME_WIDTH);
-  hauteur = cap.get(CAP_PROP_FRAME_HEIGHT);
-  fps     = cap.get(CAP_PROP_FPS);
+    largeur = cap.get(CAP_PROP_FRAME_WIDTH);
+    hauteur = cap.get(CAP_PROP_FRAME_HEIGHT);
+    fps     = cap.get(CAP_PROP_FPS);
 
 
-  cout << "Taille image : " << largeur << " x " << hauteur << endl;
-  cout << "Frame rate   : " << fps << " images par seconde" << endl;
+    cout << "Taille image : " << largeur << " x " << hauteur << endl;
+    cout << "Frame rate   : " << fps << " images par seconde" << endl;
 
-  cout << "démarrage de la capture, appuyer sur la touche x du clavier pour quitter" << endl;
+    cout << "démarrage de la capture, appuyer sur la touche x du clavier pour quitter" << endl;
 
-  cap >> image1;
-  if (image1.empty()) {
+    cap >> image;
+    if (image.empty()) {
         cerr << "ERREUR: Impossible de capturer une image" << endl;
         return -1;
-  }
-  flip(image1, image,-1); // mirroir horizontal
-  cvtColor( image, image1, CV_RGB2GRAY);
-
-  do {
-
-    cap >> image2;
-    flip(image2, image,-1); // mirroir horizontal
-    cvtColor( image, image2, CV_RGB2GRAY);
-    absdiff(image1,image2,imageDiff);// Absolute differences between the 2 images
-    threshold(imageDiff, imageDiff, seuilA, 255,CV_THRESH_BINARY); // set threshold to ignore small differences you can also use inrange function
-
-    nb = countNonZero(imageDiff == 255); // comptage des pixels
-    if (nb > nbMax){
-        putText(image, "Mouvement en cours!", Point(20, 20), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(255,255,255), 2.0);
     }
-    imshow("Live", image); // affichage de l'image dans une fenêtre pour controle
-    image2.copyTo(image1);
-  }
-  while(waitKey(5) !='x');
 
-  cout << "Fermeture de la camera" << endl;
-  cap.release();
-  destroyAllWindows();
-  cout << "bye!" <<endl;
-  return 0;
+    cvtColor( image, image1, CV_RGB2GRAY);
+
+    do {
+
+        cap >> image;
+        cvtColor( image, image2, CV_RGB2GRAY);
+        absdiff(image1,image2,imageDiff);// Absolute differences between the 2 images
+        threshold(imageDiff, imageDiff, seuilA, 255,CV_THRESH_BINARY); // set threshold to ignore small differences you can also use inrange function
+
+        nb = countNonZero(imageDiff == 255); // comptage des pixels
+        if (nb > nbMax){
+            putText(image, "Mouvement en cours!", Point(20, 20), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(255,255,255), 2.0);
+        }
+        imshow("Live", image); // affichage de l'image dans une fenêtre pour controle
+        image2.copyTo(image1);
+    }
+    while(waitKey(5) !='x');
+
+    cout << "Fermeture de la camera" << endl;
+    cap.release();
+    destroyAllWindows();
+    cout << "bye!" <<endl;
+    return 0;
 }
