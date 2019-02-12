@@ -18,8 +18,7 @@
               Pour cela, on soustrait à l'image une fraction du laplacien.
 
     \compilation
-	      g++ $(pkg-config --libs --cflags opencv) -o Laplacian  Laplacian.cpp
-	      g++ -ggdb laplacian.cpp -o laplacian `pkg-config --cflags --libs opencv`
+	      g++  Laplacian.cpp -o Laplacian `pkg-config --cflags --libs opencv`
 
     \version    1.0 - First release
 */
@@ -61,8 +60,10 @@ int main(int argc,char ** argv)
         Laplacian( image, image1, CV_16S, 3, 1, 0, BORDER_DEFAULT );  // applique le Laplacian
         convertScaleAbs( image1, image );
         imshow("Laplacian", image);
+        threshold(image, image1, 20, 255, THRESH_BINARY);
+        imshow("Laplacian plus threshold", image1);
     }
-    while(waitKey(5) != 27);
+    while(waitKey(1) != 27);
 
     cout << "Fermeture de la  camera" << endl;
     cap.release();
