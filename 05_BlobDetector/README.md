@@ -4,6 +4,8 @@
 ### 1 Introduction
 Un blob est un groupe de pixels connectés dans une image qui partagent une propriété commune (par exemple, une échelle de gris). Dans l'image ci-dessus, les régions sombres connectées sont des taches, l'objectif de la détection des taches étant d'identifier et de marquer ces régions. OpenCV fournit un moyen pratique de détecter les blobs et de les filtrer en fonction de différentes caractéristiques. 
 
+![SimpleBlobDetector](/05_BlobDetector/snapshot1.png)
+
 ## 2 SimpleBlobDetector
 ```cpp
 using namespace cv;

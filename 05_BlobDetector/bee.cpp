@@ -1,9 +1,10 @@
 /**
  * OpenCV SimpleBlobDetector Example
  *
- *  by Satya Mallick
- *
- * g++ blob.cpp -o blob `pkg-config --cflags --libs opencv`
+ * Programme original écrit par Satya Mallick <spmallick@gmail.com>
+ * Merci à lui pour toute l'aide qu'il m'a apportée.
+ * Compilation
+ *      g++ bee.cpp -o bee `pkg-config --cflags --libs opencv`
  */
 
 #include "opencv2/opencv.hpp"
@@ -33,13 +34,13 @@ string intToString(int number)
 int main( int argc, char** argv )
 {
 
-	int minThreshold = 10;
-        int maxThreshold = 100;
-        int minArea = 1500;
+	int minThreshold = 25;
+        int maxThreshold = 250;
+        int minArea = 2200;
 	showControle(&minThreshold, &maxThreshold, &minArea);
 
 	// Lecture du fichier image
-	Mat im = imread( "blob.jpg", IMREAD_GRAYSCALE );
+	Mat im = imread( "bees.jpg", IMREAD_GRAYSCALE );
 
 	// Initialisation des parametres d'un  SimpleBlobDetector.
 	SimpleBlobDetector::Params params;
@@ -54,39 +55,46 @@ int main( int argc, char** argv )
 	params.minArea = minArea;
 
 	// Filtrage par Circularité
-	params.filterByCircularity = true;
+	params.filterByCircularity = false;
 	params.minCircularity = 0.1;
 
 	// Filtrage par Convexité
-	params.filterByConvexity = true;
+	params.filterByConvexity = false;
 	params.minConvexity = 0.87;
 
-	// Filtrage par Inertie
-	params.filterByInertia = true;
+	// Filtrage par rapport Inertie
+	params.filterByInertia = false;
 	params.minInertiaRatio = 0.01;
 
-	// Tableau de blobs
+	// Tableau de points clés
 	vector<KeyPoint> keypoints;
 
-	// définition d'un detector avec ces paramètres
+	// création d'un SimpleBlobDetector avec ses paramètres
 	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
-	// Detection des blobs
+	// Appel de la méthode detect pour obtnenir la position des blobs
 	detector->detect( im, keypoints);
 
 
-	// Dessine un cercle rouge pour chaque blobs détectés.
+	// Dessine un cercle jaune pour chaque blobs détectés.
 	// DrawMatchesFlags::DRAW_RICH_KEYPOINTS flag ensures
 	// Le centre et le diametre du cercle correspond à la position et à la taille du  blob
 
 	Mat im_with_keypoints;
-	drawKeypoints( im, keypoints, im_with_keypoints, Scalar(0,0,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+	drawKeypoints( im, keypoints, im_with_keypoints, Scalar(0,255,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
 
 	// Affichage des blobs avec en légende le nb de blobs détectés
         putText(im_with_keypoints, "Nb : " + intToString(keypoints.size()), Point(20, 20), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(0,0,0), 2.0);
 	imshow("keypoints", im_with_keypoints );
 
+        // Affichage en console des coordonées
+        for (unsigned i = 0; i < keypoints.size(); i++){
+             cout << i << " : " << keypoints.at(i).pt.x << " " << keypoints.at(i).pt.y << endl;
+        }
+        cout << endl;
+
+
 	}
-  while(waitKey(500) !='x');
+  while(waitKey(0) != 27);
 
 }
 
