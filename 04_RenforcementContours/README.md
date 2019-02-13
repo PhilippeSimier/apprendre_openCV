@@ -3,7 +3,7 @@
 
 ### 1 Introduction
 Dans cette section, nous présentons deux méthodes  pour obtenir les contours dans une image. Le filtre Laplacian et l'algorithme de Canny.
-![Canny detection des contours](/Canny_screenshot_06.02.2019.png)
+![Canny detection des contours](/04_RenforcementContours/Canny_screenshot_06.02.2019.png)
 
 ### 2 Le Laplacian
 
