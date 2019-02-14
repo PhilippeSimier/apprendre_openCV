@@ -26,19 +26,13 @@ int main(int argc, char **argv)
 {
     // List of tracker types in OpenCV 3.4.1
     string trackerTypes[8] = {"BOOSTING", "MIL", "KCF", "TLD","MEDIANFLOW", "GOTURN", "MOSSE", "CSRT"};
-    // vector <string> trackerTypes(types, std::end(types));
 
     // Create a tracker
     string trackerType = trackerTypes[2];
 
     Ptr<Tracker> tracker;
 
-    #if (CV_MINOR_VERSION < 3)
-    {
-        tracker = Tracker::create(trackerType);
-    }
-    #else
-    {
+
         if (trackerType == "BOOSTING")
             tracker = TrackerBoosting::create();
         if (trackerType == "MIL")
@@ -55,8 +49,8 @@ int main(int argc, char **argv)
             tracker = TrackerMOSSE::create();
         if (trackerType == "CSRT")
             tracker = TrackerCSRT::create();
-    }
-    #endif
+
+
     // Read video
     VideoCapture video("videos/chaplin.mp4");
 
@@ -72,7 +66,7 @@ int main(int argc, char **argv)
     bool ok = video.read(frame);
 
     // Define initial bounding box
-    Rect2d bbox(287, 23, 86, 320);
+    Rect2d bbox(187, 30, 86, 320);
 
     // Uncomment the line below to select a different bounding box
     // bbox = selectROI(frame, false);
@@ -112,7 +106,7 @@ int main(int argc, char **argv)
         // Display frame.
         imshow("Tracking", frame);
         // Exit if ESC pressed.
-        int k = waitKey(1);
+        int k = waitKey(25);
         if(k == 27)
         {
             break;

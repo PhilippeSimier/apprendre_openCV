@@ -1,6 +1,7 @@
 ﻿Installation OpenCV
 ===================
-
+Cette section décrit comment installer openCV avec openCV_contrib sur système OS linux Ubuntu.
+ 
 ### 1 Mise à jour du système
 La première chose à faire est de mettre à niveau le système.
 en tant que super-utilisateur
@@ -25,12 +26,20 @@ sudo apt-get install liblapacke-dev libopenblas-dev libgdal-dev checkinstall
 
 ### 2 Obtenir le code source OpenCV
 
-Les lignes suivantes permettent d'obtenir la version 3.3.0 sur github.
-décompresser l'archive puis se placer dans le répertoire obtenu **opencv-3.3.0**
+Les lignes suivantes permettent d'obtenir la version 3.4.4 sur github.
+décompresser les archives, renommer les répertoires, puis se placer dans le répertoire obtenu **opencv**
 ```bash
-wget -O opencv.zip https://github.com/opencv/opencv/archive/3.3.0.zip
+cd ~
+wget -O opencv.zip https://github.com/opencv/opencv/archive/3.4.4.zip
+wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/3.4.4.zip
+
 unzip opencv.zip
-cd opencv-3.3.0
+unzip opencv_contrib.zip
+
+mv opencv-3.4.4/ opencv
+mv opencv_contrib-3.4.4/ opencv_contrib
+
+cd opencv
 ```
 ### 3 Compilation et installation d'OpenCV
 
@@ -41,10 +50,11 @@ apt install cmake
 Enfin, nous sommes maintenant prêts à compiler OpenCV: pour cela on utilisera tous les cœurs du processeur avec l'option -j $(($(nproc) + 1)) . 
 
 ```bash
+
 mkdir build
 cd build/
     
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D FORCE_VTK=ON -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUBLAS=ON -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES" -D WITH_GDAL=ON -D WITH_XINE=ON -D BUILD_EXAMPLES=ON ..
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D FORCE_VTK=ON -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUBLAS=ON -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES" -D WITH_GDAL=ON -D WITH_XINE=ON -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules  -D BUILD_EXAMPLES=ON ..
 
 make -j $(($(nproc) + 1))
 ```
