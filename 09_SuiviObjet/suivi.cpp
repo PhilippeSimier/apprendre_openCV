@@ -32,6 +32,11 @@ int main(int argc, char **argv)
 
     Ptr<Tracker> tracker;
 
+    #if (CV_MINOR_VERSION < 3)
+    {
+        tracker = Tracker::create(trackerType);
+    }
+    #else
 
         if (trackerType == "BOOSTING")
             tracker = TrackerBoosting::create();
@@ -49,7 +54,7 @@ int main(int argc, char **argv)
             tracker = TrackerMOSSE::create();
         if (trackerType == "CSRT")
             tracker = TrackerCSRT::create();
-
+    #endif
 
     // Read video
     VideoCapture video("videos/chaplin.mp4");
