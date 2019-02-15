@@ -1,0 +1,68 @@
+Installation OPenCV 3 pour raspberry pi3plus 
+
+Fait le 14/02/2018
+
+
+sudo apt-get install pkg-config unzip ffmpeg qtbase5-dev python-dev python3-dev python-numpy python3-numpy
+sudo apt-get install  libdc1394-22 libdc1394-22-dev libjpeg-dev libpng12-dev libtiff5-dev libjasper-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+sudo apt-get install libv4l-dev libtbb-dev  libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev
+sudo apt-get install libvorbis-dev libxvidcore-dev v4l-utils vtk6
+sudo apt-get install liblapacke-dev libopenblas-dev libgdal-dev checkinstall
+
+sudo apt-get install libgtk2.0-dev
+
+
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+sudo python3 get-pip.py
+pip install numpy
+
+
+wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.0.zip
+unzip opencv.zip
+
+wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.3.0.zip
+unzip opencv_contrib.zip
+
+cd opencv  opencv-3.3.0
+mkdir build
+cd build/
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_PYTHON_EXAMPLES=ON -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.3.0/modules -D BUILD_EXAMPLES=ON ..
+
+resultat de cmake quand tout va bien
+
+--   cvconfig.h is in:              /home/pi/opencv-3.3.0/build
+-- -----------------------------------------------------------------
+--
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/pi/opencv-3.3.0/build
+
+
+CONF_SWAPSIZE=1024
+sudo /etc/init.d/dphys-swapfile stop
+sudo /etc/init.d/dphys-swapfile start
+
+
+On compile avec un seul coeur 4 heures 
+sudo make 
+
+sudo make install
+sudo ldconfig
+
+verification de l'installation
+
+/usr/local/bin/opencv_version
+3.3.0
+
+pi@raspPi3plus:~/opencv-3.3.0/build $ python3
+Python 3.5.3 (default, Sep 27 2018, 17:25:39)
+[GCC 6.3.0 20170516] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import cv2
+>>> cv2.__version__
+'3.3.0'
+>>> quit()
+
