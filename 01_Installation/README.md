@@ -47,18 +47,21 @@ Tout d’abord installer **cmake**
 ```bash
 apt install cmake
 ```
-Enfin, nous sommes maintenant prêts à compiler OpenCV: pour cela on utilisera tous les cœurs du processeur avec l'option -j $(($(nproc) + 1)) . 
-
+Dans le répertoire opencv;  créer un dossier **build** 
 ```bash
-
 mkdir build
 cd build/
-    
+```
+**cmake** génère les fichiers nécessaires pour construire OpenCV dans le dossier build. cmake ne produit pas directement le logiciel final, il s'occupe de la génération de fichiers de construction standards : les makefiles sous linux.
+```bash    
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D FORCE_VTK=ON -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUBLAS=ON -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES" -D WITH_GDAL=ON -D WITH_XINE=ON -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules  -D BUILD_EXAMPLES=ON ..
+```
+Enfin, nous sommes maintenant prêts à compiler OpenCV: pour cela on utilisera tous les cœurs du processeur avec l'option -j $(($(nproc) + 1)) .  Compter une vingtaine de minutes.
 
+```bash
 make -j $(($(nproc) + 1))
 ```
-Puis nous pouvons passer à l'installation
+Puis nous pouvons passer à l'installation en tant que super-utilisateur
 ```bash
 sudo make install
 sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
@@ -70,7 +73,7 @@ sudo apt-get update
 Pour contrôler l'installation exécuter le programme opencv_version situé dans le répertoire /usr/local/bin.
 ```bash
 /usr/local/bin/opencv_version
-3.3.0
+3.3.4
 ```
 ### 5 Vérification pour python
 
@@ -81,19 +84,21 @@ Python 3.5.2 (default, Nov 12 2018, 13:43:14)
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import cv2
 >>> cv2.__version__
-'3.3.0'
+'3.3.4'
 >>> quit()
 ```
 
 ### 6 Compilation d'un premier programme
 le programme test.cpp est un programme très simple qui se contente de créer une image de couleur uniforme et de l'afficher dans une fenêtre.
 
-Pour compiler c
-e programme utiliser la ligne de commande suivante :
+Pour compiler ce programme utiliser la ligne de commande suivante :
 ```bash
 g++ -ggdb test.cpp -o test `pkg-config --cflags --libs opencv`
 ```
-
+Lancer l'exécution vous devez voir apparaître une fenêtre avec un rectangle de couleur unie.
+```bash
+./test
+```
 
 ### Changelog
 
