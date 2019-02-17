@@ -1,7 +1,7 @@
 ﻿Installation OpenCV 3 pour raspberry pi3plus
 ===================
 Cette section décrit comment installer openCV avec openCV_contrib sur système OS linux rasbian.
-Installation testée sur raspberry pi3 plus avec carte SD 16Go
+Installation testée sur raspberry pi3 plus avec carte SD 16Go.
  
 ### 1 Mise à jour du système
 La première chose à faire en tant que super-utilisateur est de mettre à niveau le système.
@@ -11,7 +11,7 @@ apt-get update
 apt-get upgrade
 ```
 
-###2 faire de la place sur la carte SD
+### 2 faire de la place sur la carte SD
 deuxième chose : faire de la place sur la carte en retirant wolfram-engine et libreoffice.
 
 ```bash
@@ -21,7 +21,7 @@ sudo apt-get -y clean
 sudo apt-get -y autoremove
 ```
 
-###Dépendances
+### 3 Dépendances
 
 Installation des bibliothèques du système d'exploitation
 
@@ -35,14 +35,14 @@ sudo apt-get install liblapacke-dev libopenblas-dev libgdal-dev checkinstall
 
 sudo apt-get install libgtk2.0-dev
 ```
-### Installation des bibliothèques Python
+### 4 Installation des bibliothèques Python
 ```bash
 wget https://bootstrap.pypa.io/get-pip.py
 sudo python get-pip.py
 sudo python3 get-pip.py
 pip install numpy
 ```
-### Télécharger opencv et opencv_contrib
+### 5 Télécharger opencv et opencv_contrib
 
 ```bash
 wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.0.zip
@@ -52,13 +52,15 @@ wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.3.
 unzip opencv_contrib.zip
 ```
 
-### Création du répertoire build
+### 6 Création du répertoire build
 
 ```bash
 cd opencv  opencv-3.3.0
 mkdir build
 cd build/
 ```
+
+### 7 cmake
 
 cmake génère les fichiers nécessaires pour construire OpenCV dans le dossier build. cmake ne produit pas directement le logiciel final, il s'occupe de la génération de fichiers de construction standards : les makefiles sous linux.
 
@@ -76,14 +78,14 @@ résultat de cmake quand tout va bien
 -- Build files have been written to: /home/pi/opencv-3.3.0/build
 ```
 
-###Augmentation de la taille du swap
+### 8 Augmentation de la taille du swap
 ```bash
 CONF_SWAPSIZE=1024
 sudo /etc/init.d/dphys-swapfile stop
 sudo /etc/init.d/dphys-swapfile start
 ```
 
-### Compilation avec un seul cœur 
+### 9 Compilation avec un seul cœur 
 il faut compter environ 4 heures 
 ```bash
 sudo make 
@@ -91,7 +93,7 @@ sudo make
 sudo make install
 sudo ldconfig
 ```
-### verification de l'installation
+### 10 verification de l'installation
 
 ```bash
 /usr/local/bin/opencv_version
@@ -106,7 +108,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 '3.3.0'
 >>> quit()
 ```
-### installation du module V4L2
+### 11 installation du module V4L2
 
 Enfin, nous devons également ajouter une déclaration simple pour nous assurer que VideoCapture (0) fonctionne sur notre Raspberry Pi avec la camera.
 
