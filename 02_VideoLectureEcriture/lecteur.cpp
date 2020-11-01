@@ -13,9 +13,9 @@
 
 
     \compilation linux
-              g++ -ggdb lecteur.cpp -o lecteur `pkg-config --cflags --libs opencv`
+              g++ -ggdb lecteur.cpp -o lecteur `pkg-config --cflags --libs opencv4`
 
-    \version    1.0 - First release
+    \version    2.0 - Second release for opencv4
 
     \test	./lecteur chaplin.mp4
 		./lecteur
@@ -53,9 +53,9 @@ int main(int argc,char ** argv)
         return -1;
     }
 
-    largeur = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-    hauteur = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-    fps     = cap.get(CAP_PROP_FPS);
+    largeur = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+    hauteur = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    fps     = cap.get(cv::CAP_PROP_FPS);
 
     cout << "Frame rate   : " << fps << " images par seconde" << endl;
     cout << "Taille image : " << largeur << " x " << hauteur << endl;
